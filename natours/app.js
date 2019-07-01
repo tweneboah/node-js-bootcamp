@@ -1,7 +1,10 @@
 const express = require('express');
 const app = express();
 
+const tourRouter = require('./routes/tourRoutes');
+const userRouter = require('./routes/userRoutes')
 
+//IMPORTING CONTROLLERS
 
 //MIDDLEWARE
 
@@ -11,68 +14,16 @@ app.use(express.json())
 
 //==========ROUTING========
 
-//////////// TOURS ROUTE METHODS ////////////////
-
-const getAllTours = (req, res) => {
-  console.log(tourRouter.route)
-   res.send('getAllTours')
-}
-
-
-const getTour = (req, res) => {
-  console.log('getTour')
-  res.send('getTour')
-}
-
-const createTour =  (req, res) => {
-  console.log('createTour')
-  res.send('createTour')
-}
-
-const updateTour = (req, res) => {
-  console.log('updateTour')
-  res.send('updateTour')
-}
-
-const deleteTour = (req, res) => {
-  console.log('deleteTour')
-  res.send('deleteTour')
-};
-
-
-////////////////////  USERS ROUTES  /////////
-
-const getAllusers = (req, res) => {
- console.log('getAllusers')
- res.send('getAllusers')
-
-}
-
-const getUser = (req, res) => {
-  console.log('getUser')
-  res.send('getUser')
-}
-
-const createUser =  (req, res) => {
-  console.log('createUser')
-  res.send('createUser')
-}
-
-const updateUser = (req, res) => {
-  console.log('updateUser')
-  res.send('updateUser')
-}
-
-const deleteUser = (req, res) => {
-  console.log('deleteUser')
-  res.send('deleteUser')
-};
 
 
 
 
-const tourRouter = express.Router();
-const userRouter = express.Router(); // = mounting router
+
+
+
+
+
+ // = mounting router
 //We will pass this as a middleware
 
 //express.Router() is a function on express, when you console.log(tourRouter), you will get this
@@ -85,18 +36,13 @@ const userRouter = express.Router(); // = mounting router
   So after defining this route as tourRouter.route('/').get(getAllTours).post(createTour); then we pass it to app.use() as a middleware
   //Middleware takes in a function, in our case it first check if the user is on the right path as '/api/v1/tours' then it will execute the function passed to
  */ 
-console.log('tourRouter', tourRouter.route)
+//console.log('tourRouter', tourRouter.route)
 
 //=====PASSING THE ROUTE AS A MIDDLEWARE====
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 
 
-//=====ROUTES MIDDLEWARE METHODS
- tourRouter.route('/').get(getAllTours).post(createTour);
- tourRouter.route('/:id').get(getTour).delete(deleteTour).patch(updateTour);
- userRouter.route('/').get(getAllusers).post(createUser);
- userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
  
 
 
