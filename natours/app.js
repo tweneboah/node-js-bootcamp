@@ -11,6 +11,8 @@ const userRouter = require('./routes/userRoutes')
 //This help us to add request to body
 app.use(express.json())
 
+//serving static files
+app.use(express.static(`${__dirname}/public`))
 
 
 //=====PASSING THE ROUTE AS A MIDDLEWARE====

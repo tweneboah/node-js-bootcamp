@@ -3,7 +3,15 @@
   const tourController = require('../controllers/tourController')
 
 
-   router.route('/').get(tourController.getAllTours).post(tourController.createTour);
+  // CUSTOME MIDDLEWARE: To get the id of a certain resource
+
+  router.param('id', (req, res, next, val) => { 
+    console.log('Tour id is', val)
+    next()
+  })
+
+
+   router.route('/').get(tourController.getAllTours).post(tourController.checkBody,tourController.createTour);
    router.route('/:id').get(tourController.getTour).delete(tourController.deleteTour).patch(tourController.updateTour);
 
 

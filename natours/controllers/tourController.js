@@ -7,8 +7,21 @@
 
 //When your importing it, you do it as 
 
-  exports.getAllTours = (req, res) => {
-   console.log(tourRouter.route)
+
+
+//====CUSTOME MIDDLEWARE FOR CHECKING IF NAME OR PRICE IS EMPTY ======
+
+exports.checkBody = (req, res, next) => {
+   if(!req.body.name || !req.body.price) {
+     return res.status(400).json({
+       status: 'fail',
+       message: 'Missing price or name'
+     })
+   }
+}
+
+
+ exports.getAllTours = (req, res) => {
     res.send('getAllToursf')
   }
 
