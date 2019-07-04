@@ -1,47 +1,114 @@
-
-  //Controllers are the functions of a route
-
-// When there are many functions on one file, you have to attach the export keyword to so wherever you require these files, all the functions can be accessed
-
-//You can also use a destructure to pull the individual functions
-
-//When your importing it, you do it as 
+const Tour = require('../models/tourModel');
 
 
+ exports.getAllTours = async (req, res) => {
+  
 
-//====CUSTOME MIDDLEWARE FOR CHECKING IF NAME OR PRICE IS EMPTY ======
+     try {
+     
+      //QUERYING
 
-exports.checkBody = (req, res, next) => {
-   if(!req.body.name || !req.body.price) {
-     return res.status(400).json({
-       status: 'fail',
-       message: 'Missing price or name'
-     })
+      const queryObj = {...req.query} //This contains all query value pairs
+      
+      const excludedFields = ['page', 'sort', 'limit', 'fileds']
+     
+      excludedFields.forEach(el => delete queryObj[el]) 
+
+  
+      const tours = await Tour.find(queryObj);
+
+      res.json({
+        status: 'Success',
+        results: tours.length,
+        data: {
+          tours
+        }
+  
+      })
+     } catch (error) {
+        res.status(404).json({
+          status: 'fail',
+          message: error
+        })
+     }
+  }
+
+
+  exports.getTour = async (req, res) => {
+      try {
+           const tour = await Tour.findById(req.params.id)
+            res.status(200).json({
+              status: 'Success',
+              data: {
+                tour
+              }
+            })
+      } catch (error) {
+        res.status(404).json({
+          status: 'fail',
+          message: error
+        })
+      }
+  }
+
+  //Creating Tour
+
+  exports.createTour =  async (req, res) => {
+   //In async await we handle error using try catch
+
+   try {
+    const newTour =  await Tour.create(req.body)
+
+    res.status(201).json({
+      status: 'Success',
+      data: {
+        tour: newTour
+      }
+    })
+    res.send('createTour')
+     } catch (err) {
+       //The errors here are the errors we specified when creating schema
+        res.status(400).json({
+          status: 'fail',
+          message: err
+        })
    }
-}
-
-
- exports.getAllTours = (req, res) => {
-    res.send('getAllToursf')
+  
   }
 
-
-  exports.getTour = (req, res) => {
-   console.log('getTour')
-   res.send('getTour')
+  exports.updateTour = async (req, res) => {
+       try {
+         //Query for item you want to update
+      const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
+        new:true, //This returns the modified data rather than the original one
+        runValidators: true
+      })
+        res.status(201).json({
+          status: 'Success',
+          data: {
+            tour: tour
+          }
+        })
+       } catch (error) {
+        res.status(404).json({
+          status: 'fail',
+          message: error
+        })
+       }
   }
 
-  exports.createTour =  (req, res) => {
-   console.log('createTour')
-   res.send('createTour')
-  }
-
-  exports.updateTour = (req, res) => {
-   console.log('updateTour')
-   res.send('updateTour')
-  }
-
-  exports.deleteTour = (req, res) => {
-   console.log('deleteTour')
-   res.send('deleteTour')
+  exports.deleteTour = async (req, res) => {
+    try {
+      //Query for item you want to delete
+   await Tour.findByIdAndDelete(req.params.id)
+    
+     res.status(204).json({
+       status: 'Success'
+     })
+    } catch (error) {
+     res.status(404).json({
+       status: 'fail',
+       message: error
+     })
+    }
   };
