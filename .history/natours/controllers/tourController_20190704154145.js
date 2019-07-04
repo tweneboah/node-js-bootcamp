@@ -10,7 +10,7 @@ const Tour = require('../models/tourModel');
      // BUILD QUERY
      // 1. Filtering
       const queryObj = {...req.query} //This contains all query value pairs
-      const excludedFields = ['page', 'sort', 'limit', 'fields']
+      const excludedFields = ['page', 'sort', 'limit', 'fieds']
         excludedFields.forEach((el) => {
             return delete queryObj[el]
         })
@@ -66,7 +66,7 @@ const Tour = require('../models/tourModel');
             // BUILD QUERY
             // 1. Filtering
              const queryObj = {...req.query} //This contains all query value pairs
-             const excludedFields = ['page', 'sort', 'limit', 'fields']
+             const excludedFields = ['page', 'sort', 'limit', 'fileds']
                excludedFields.forEach((el) => {
                    return delete queryObj[el]
                })
@@ -124,12 +124,7 @@ const Tour = require('../models/tourModel');
        
 
              //=====FIELD LIMITING=====
-             if(req.query.fields){
-               const fields = req.query.sort.split(',').join(' ');
-               query = query.select(fields)
-             }else {
-               query = query.select('-__v')// We are excluding _v to diplay to the user
-             }
+             if(req.query.fields)
 
 
              //Execute the Query

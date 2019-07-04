@@ -127,8 +127,6 @@ const Tour = require('../models/tourModel');
              if(req.query.fields){
                const fields = req.query.sort.split(',').join(' ');
                query = query.select(fields)
-             }else {
-               query = query.select('-__v')// We are excluding _v to diplay to the user
              }
 
 
