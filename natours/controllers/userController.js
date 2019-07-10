@@ -1,5 +1,6 @@
 
-
+//Email method
+const {sendWelcomeEmail} = require('../emails/account')
 
 
   //Controllers are the functions of a route

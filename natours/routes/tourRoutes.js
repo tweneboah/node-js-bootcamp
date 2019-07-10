@@ -11,8 +11,8 @@
   })
 
 
-   router.route('/').get(tourController.getAllTours).post(tourController.createTour);
-   router.route('/:id').get(tourController.getTour).delete(tourController.deleteTour).patch(tourController.updateTour);
+   router.route('/').get(tourController.getAllTours).post(tourController.createTour)
+   
 
 
 

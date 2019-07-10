@@ -62,6 +62,9 @@ const tourSchema = new mongoose.Schema({
       startDate: {
         type: [Date],
       },
+      image: {
+        type: Buffer
+      }
 });
 
 //Creating model
